@@ -4,12 +4,24 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
+@Table(name = "FruitDetails")
+@NamedQueries(
+		{@NamedQuery(name = "getFruitbyPrice",query = "Select f.fname From Fruit f where f.price <=250"),
+		@NamedQuery(name = "getFruitPrice",query = "Select f.price From Fruit f where f.fname =:name1")}
+		)
 public class Fruit implements Serializable{
 
 	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int fruitid;
 	
 	private String fname;
@@ -19,6 +31,10 @@ public class Fruit implements Serializable{
 	@Column(name ="fsize")
 	private String size;
 	private boolean seedpresent;
+	
+	@Transient
+	private int n1;
+	
 	
 	public Fruit() {}
 	
